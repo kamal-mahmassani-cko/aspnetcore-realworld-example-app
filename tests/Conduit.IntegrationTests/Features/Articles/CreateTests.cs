@@ -26,4 +26,24 @@ public class CreateTests : SliceFixture
         Assert.Equal(article.Title, command.Article.Title);
         Assert.Equal(article.TagList.Count(), command.Article.TagList?.Count());
     }
+
+    [Fact]
+    public async Task Expect_Create_Article_With_AuthorName()
+    {
+        var command = new Create.Command(
+            new Create.ArticleData
+            {
+                Title = "Test article with author name",
+                Description = "Description of the test article",
+                Body = "Body of the test article",
+                TagList = ["tag1", "tag2"]
+            }
+        );
+
+        var article = await ArticleHelpers.CreateArticle(this, command);
+
+        Assert.NotNull(article);
+        Assert.Equal(article.Title, command.Article.Title);
+        Assert.Equal(article.AuthorName, UserHelpers.DefaultUserName);
+    }
 }

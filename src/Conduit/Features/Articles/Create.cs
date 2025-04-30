@@ -76,6 +76,7 @@ public class Create
                 UpdatedAt = DateTime.UtcNow,
                 Description = message.Article.Description,
                 Title = message.Article.Title,
+                AuthorName = author.Username,
                 Slug = message.Article.Title.GenerateSlug()
             };
             await context.Articles.AddAsync(article, cancellationToken);
