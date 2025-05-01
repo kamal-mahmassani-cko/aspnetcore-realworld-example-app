@@ -19,6 +19,8 @@ public class Article
 
     public string? Body { get; set; }
 
+    public string? AuthorName { get; set; }
+
     public Person? Author { get; init; }
 
     public List<Comment> Comments { get; init; } = new();

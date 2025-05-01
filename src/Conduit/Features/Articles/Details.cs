@@ -36,6 +36,7 @@ public class Details
                     new { Article = Constants.NOT_FOUND }
                 );
             }
+
             return new ArticleEnvelope(article);
         }
     }

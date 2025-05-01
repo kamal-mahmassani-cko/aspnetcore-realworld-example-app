@@ -49,6 +49,7 @@ public class Edit
             article.Description = message.Model.Article.Description ?? article.Description;
             article.Body = message.Model.Article.Body ?? article.Body;
             article.Title = message.Model.Article.Title ?? article.Title;
+            article.AuthorName = article.Author?.Username;
             article.Slug = article.Title.GenerateSlug();
 
             // list of currently saved article tags for the given article
