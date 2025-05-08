@@ -11,6 +11,8 @@ public class User
     public string? Image { get; init; }
 
     public string? Token { get; set; }
+
+    public string? Address { get; set; }
 }
 
 public record UserEnvelope(User User);
