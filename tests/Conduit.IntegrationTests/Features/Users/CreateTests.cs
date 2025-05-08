@@ -23,4 +23,5 @@ public class CreateTests : SliceFixture
         Assert.NotNull(created);
         Assert.Equal(created.Hash, await new PasswordHasher().Hash("password", created.Salt));
     }
+
 }

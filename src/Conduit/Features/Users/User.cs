@@ -6,6 +6,8 @@ public class User
 
     public string? Email { get; init; }
 
+    public string? Address { get; init; }
+
     public string? Bio { get; init; }
 
     public string? Image { get; init; }

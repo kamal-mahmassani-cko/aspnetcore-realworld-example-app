@@ -47,5 +47,7 @@ public class Details
             );
             return new UserEnvelope(user);
         }
+
     }
 }
+

@@ -1,0 +1,125 @@
+diff --git a/src/Conduit/Domain/Person.cs b/src/Conduit/Domain/Person.cs
+index 85ca946..f366e01 100644
+--- a/src/Conduit/Domain/Person.cs
++++ b/src/Conduit/Domain/Person.cs
+@@ -12,6 +12,8 @@
+ 
+     public string? Email { get; set; }
+ 
++    public string? Address { get; set; }
++
+     public string? Bio { get; set; }
+ 
+     public string? Image { get; set; }
+diff --git a/src/Conduit/Features/Users/Details.cs b/src/Conduit/Features/Users/Details.cs
+index 54f923a..f2e3365 100644
+--- a/src/Conduit/Features/Users/Details.cs
++++ b/src/Conduit/Features/Users/Details.cs
+@@ -39,6 +39,7 @@
+             );
+             return new UserEnvelope(user);
+         }
++
+     }
+ }
+ 
+diff --git a/src/Conduit/Features/Users/Edit.cs b/src/Conduit/Features/Users/Edit.cs
+index 4a67b09..28a4d72 100644
+--- a/src/Conduit/Features/Users/Edit.cs
++++ b/src/Conduit/Features/Users/Edit.cs
+@@ -21,6 +21,8 @@
+         public string? Password { get; set; }
+ 
+         public string? Bio { get; set; }
++
++        public string? Address { get; set; }
+ 
+         public string? Image { get; set; }
+     }
+@@ -57,6 +59,7 @@
+             person.Email = message.User.Email ?? person.Email;
+             person.Bio = message.User.Bio ?? person.Bio;
+             person.Image = message.User.Image ?? person.Image;
++            person.Address = message.User.Address ?? person.Address;
+ 
+             if (!string.IsNullOrWhiteSpace(message.User.Password))
+             {
+diff --git a/src/Conduit/Features/Users/MappingProfile.cs b/src/Conduit/Features/Users/MappingProfile.cs
+index 7c74e95..3826796 100644
+--- a/src/Conduit/Features/Users/MappingProfile.cs
++++ b/src/Conduit/Features/Users/MappingProfile.cs
+@@ -4,5 +4,6 @@
+ 
+ public class MappingProfile : Profile
+ {
++
+     public MappingProfile() => CreateMap<Domain.Person, User>(MemberList.None);
+ }
+diff --git a/src/Conduit/Features/Users/User.cs b/src/Conduit/Features/Users/User.cs
+index 67575a5..61822d9 100644
+--- a/src/Conduit/Features/Users/User.cs
++++ b/src/Conduit/Features/Users/User.cs
+@@ -8,6 +8,8 @@
+ 
+     public string? Email { get; init; }
+ 
++    public string? Address { get; init; }
++
+     public string? Bio { get; init; }
+ 
+     public string? Image { get; init; }
+diff --git a/tests/Conduit.IntegrationTests/Features/Users/CreateTests.cs b/tests/Conduit.IntegrationTests/Features/Users/CreateTests.cs
+index 2f96bb8..44e3a6c 100644
+--- a/tests/Conduit.IntegrationTests/Features/Users/CreateTests.cs
++++ b/tests/Conduit.IntegrationTests/Features/Users/CreateTests.cs
+@@ -7,7 +7,7 @@
+     [Fact]
+     public async Task Expect_Create_User()
+     {
+-        var command = new Create.Command(new Create.UserData("username", "email", "password"));
++        var command = new Create.Command(new Create.UserData("username", "email", "password"));
+ 
+         await SendAsync(command);
+ 
+@@ -17,4 +17,5 @@
+         Assert.NotNull(created);
+         Assert.Equal(created.Hash, await new PasswordHasher().Hash("password", created.Salt));
+     }
++
+ }
+\ No newline at end of file
+diff --git a/tests/Conduit.IntegrationTests/Features/Users/LoginTests.cs b/tests/Conduit.IntegrationTests/Features/Users/LoginTests.cs
+index 3e1e1b1..3e1e1b1 100644
+--- a/tests/Conduit.IntegrationTests/Features/Users/LoginTests.cs
++++ b/tests/Conduit.IntegrationTests/Features/Users/LoginTests.cs
+@@ -41,4 +41,5 @@
+         Assert.Equal("username", user.User.Username);
+         Assert.NotNull(user.User.Token);
+     }
++
+ }
+\ No newline at end of file
+diff --git a/tests/Conduit.IntegrationTests/SliceFixture.cs b/tests/Conduit.IntegrationTests/SliceFixture.cs
+index 87c45d6..87c45d6 100644
+--- a/tests/Conduit.IntegrationTests/SliceFixture.cs
++++ b/tests/Conduit.IntegrationTests/SliceFixture.cs
+@@ -77,4 +77,5 @@
+             }
+             return db.SaveChangesAsync();
+         });
++
+ }
+\ No newline at end of file
+diff --git a/tests/Conduit.IntegrationTests/StubCurrentUserAccessor.cs b/tests/Conduit.IntegrationTests/StubCurrentUserAccessor.cs
+index 8397e1c..8397e1c 100644
+--- a/tests/Conduit.IntegrationTests/StubCurrentUserAccessor.cs
++++ b/tests/Conduit.IntegrationTests/StubCurrentUserAccessor.cs
+@@ -4,4 +4,5 @@
+ public class StubCurrentUserAccessor(string userName) : ICurrentUserAccessor
+ {
+     public string GetCurrentUsername() => userName;
++
+ }
+\ No newline at end of file
+
+

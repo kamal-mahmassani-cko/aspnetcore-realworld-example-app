@@ -33,4 +33,5 @@ public class LoginTests : SliceFixture
         Assert.Equal("username", user.User.Username);
         Assert.NotNull(user.User.Token);
     }
+
 }
