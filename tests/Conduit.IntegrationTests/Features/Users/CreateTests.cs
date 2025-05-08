@@ -12,7 +12,7 @@ public class CreateTests : SliceFixture
     [Fact]
     public async Task Expect_Create_User()
     {
-        var command = new Create.Command(new Create.UserData("username", "email", "password"));
+        var command = new Create.Command(new Create.UserData("username", "email", "password", "123 Main St"));
 
         await SendAsync(command);
 

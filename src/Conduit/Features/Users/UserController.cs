@@ -12,7 +12,7 @@ namespace Conduit.Features.Users;
 [Authorize(AuthenticationSchemes = JwtIssuerOptions.Schemes)]
 public class UserController(IMediator mediator, ICurrentUserAccessor currentUserAccessor)
 {
-    [HttpGet]
+  [HttpGet]
     public Task<UserEnvelope> GetCurrent(CancellationToken cancellationToken) =>
         mediator.Send(
             new Details.Query(currentUserAccessor.GetCurrentUsername() ?? "<unknown>"),

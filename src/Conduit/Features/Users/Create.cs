@@ -16,7 +16,7 @@ namespace Conduit.Features.Users;
 
 public class Create
 {
-    public record UserData(string? Username, string? Email, string? Password);
+    public record UserData(string? Username, string? Email, string? Password, string? Address = null);
 
     public record Command(UserData User) : IRequest<UserEnvelope>;
 
@@ -67,6 +67,7 @@ public class Create
             var person = new Person
             {
                 Username = message.User.Username,
+                Address = message.User.Address,
                 Email = message.User.Email,
                 Hash = await passwordHasher.Hash(
                     message.User.Password ?? throw new InvalidOperationException(),
